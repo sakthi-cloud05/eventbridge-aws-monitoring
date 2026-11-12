@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Id": "EventBridgePublishToSNSPolicy",
+  "Statement": [
+    {
+      "Sid": "AllowEventBridgeToPublishEC2Alerts",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "events.amazonaws.com"
+      },
+      "Action": "sns:Publish",
+      "Resource": "arn:aws:sns:ap-south-1:YOUR_ACCOUNT_ID:ec2-state-change-alerts"
+    }
+  ]
+}
