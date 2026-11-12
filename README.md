@@ -1,10 +1,14 @@
-# eventbridge-aws-monitoring
-eventbridge-aws-monitoring/
-├── README.md
-├── architecture.png
-├── config/
-│   ├── ec2-state-change-rule.json   (EventBridge JSON pattern capturing stopped/terminated EC2s)
-│   └── sns-topic-policy.json        (IAM/SNS permission policy allowing EventBridge to publish)
-└── screenshots/
-    ├── eventbridge-rule.png
-    └── sns-email-alert.png
+# 🔔 Event-Driven AWS Infrastructure Monitoring (EventBridge + SNS)
+
+A decoupled, serverless event-driven monitoring architecture built on **Amazon EventBridge** and **Amazon SNS** to capture real-time EC2 instance state transitions (`stopped`, `stopping`, `terminated`, `shutting-down`) and route structured JSON payloads to operations administrators instantly.
+
+---
+
+## 🏗️ Architecture Flow
+
+```mermaid
+flowchart LR
+    A[Amazon EC2 Instance\nState Change: Stopped/Terminated] -->|Emits System Event| B(Amazon EventBridge\nDefault Event Bus)
+    B -->|Matches JSON Pattern| C{EventBridge Rule\ncapture-ec2-critical-state}
+    C -->|Routes Raw JSON Payload| D[Amazon SNS Topic\nec2-state-change-alerts]
+    D -->|Delivers Instant Alert| E[Operations Admin\nEmail / SMS / Webhook]
